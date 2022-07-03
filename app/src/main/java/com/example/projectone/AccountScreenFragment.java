@@ -16,6 +16,7 @@ public class AccountScreenFragment extends Fragment {
     FirebaseAuth mAuth;
     String userName;
     Button logoutButton;
+    Button findMatchButton;
 
     public AccountScreenFragment() {
     }
@@ -40,11 +41,12 @@ public class AccountScreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account_screen, container, false);
 
+        findMatchButton = view.findViewById(R.id.buttonFindPlayer);
         logoutButton = view.findViewById(R.id.accountScreenLogoutButton);
         mAuth = FirebaseAuth.getInstance();
-        userName = mAuth.getCurrentUser().getDisplayName();
+        //userName = mAuth.getCurrentUser().getDisplayName();
 
-        getActivity().setTitle(userName + "'s Profile");
+        getActivity().setTitle("Your Profile");
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +55,17 @@ public class AccountScreenFragment extends Fragment {
 
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.MainLayout, new LogInFragment())
+                        .commit();
+            }
+        });
+
+        findMatchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.MainLayout, new GameScreenFragment())
+                        .addToBackStack(null)
                         .commit();
             }
         });
